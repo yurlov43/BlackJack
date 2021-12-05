@@ -1,0 +1,2 @@
+class MoneyError < RuntimeError
+end
