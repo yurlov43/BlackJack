@@ -31,7 +31,7 @@ class CardsDeck
 
   def show
     cards.each { |card| print "#{card.name}#{card.suit} " }
-    nil
+    puts
   end
 
   def mix(number=30)
@@ -40,17 +40,25 @@ class CardsDeck
 
   def add_card(card)
     cards << card
-    self.count += card.value
   end
 
   def hand_over_card
-    if cards.size > 0
-      self.count -= cards.first.value
-      cards.shift
-    end
+    cards.shift if cards.size > 0
   end
 
   def count_up
-    cards.each { |card| self.count += card.value } if cards.size > 0
+    self.count = 0
+
+    aces = cards.select { |card| card.name == 'T' }
+
+    case aces.size
+    when 2
+      aces.first.value = 1
+      aces.last.value = 1 if self.count + aces.first.value + aces.last.value > 21
+    when 3
+      aces.each { |ace| ace.value = 1 }
+    end
+
+    cards.each { |card| self.count += card.value }
   end
 end

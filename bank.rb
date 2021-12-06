@@ -14,6 +14,7 @@ class Bank
   def spend_money(value)
     if money_amount >= value
       self.money_amount -= value
+      value
     else
       raise MoneyError, "#{owner.name}: недостаточно средств!!!"
     end
