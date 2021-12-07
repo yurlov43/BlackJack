@@ -48,17 +48,27 @@ class CardsDeck
 
   def count_up
     self.count = 0
+    aces = []
 
-    aces = cards.select { |card| card.name == 'T' }
+    cards.each do |card|
+      if card.name == 'T'
+        aces << card
+        next
+      end
+      self.count += card.value
+    end
 
     case aces.size
+    when 1
+      aces.first.value = 1 if self.count + aces.first.value > 21
     when 2
-      aces.first.value = 1
-      aces.last.value = 1 if self.count + aces.first.value + aces.last.value > 21
+      aces.last.value = 1
+      aces.first.value = 1 if self.count + aces.first.value + aces.last.value > 21
     when 3
       aces.each { |ace| ace.value = 1 }
     end
 
+    self.count = 0
     cards.each { |card| self.count += card.value }
   end
 end

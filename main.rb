@@ -37,6 +37,8 @@ loop do
 
   BlackJack.new(bank, cards_deck, player, dealer).start
 
-  query = Readline.readline("Начать новую игру? (q-выход): ".in_yellow).chomp
+  query = Readline.readline("Выйти из игры - q, Продолжить - y: ".in_yellow).chomp
   break if query == 'q'
+  player.cards.cards.size.times { player.cards.hand_over_card }
+  dealer.cards.cards.size.times { dealer.cards.hand_over_card }
 end
