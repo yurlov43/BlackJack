@@ -13,11 +13,7 @@ class BlackJack
   end
 
   def start
-    player.take_cards(2, cards_deck)
-    player.show_data
-
-    dealer.take_cards(2, cards_deck)
-    dealer.show_data(true)
+    initial_distribution
 
     until player.cards.size == 3 && dealer.cards.size == 3
       case walking_player
@@ -38,7 +34,6 @@ class BlackJack
           dealer.take_cards(1, cards_deck)
           dealer.show_data(true)
         end
-
       end
     end
 
@@ -71,5 +66,13 @@ class BlackJack
     else
       puts "Ничья."
     end
+  end
+
+  def initial_distribution
+    player.take_cards(2, cards_deck)
+    player.show_data
+
+    dealer.take_cards(2, cards_deck)
+    dealer.show_data(true)
   end
 end
