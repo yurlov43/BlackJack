@@ -69,6 +69,7 @@ class CardsDeck
 
     cards.each do |card|
       if card.name == 'T'
+        card.value = 11
         aces << card
         next
       end
