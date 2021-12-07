@@ -1,3 +1,4 @@
+require_relative 'string'
 require 'readline'
 
 class BlackJack
@@ -18,15 +19,7 @@ class BlackJack
     until player.cards.size == 3 && dealer.cards.size == 3
       case walking_player
       when player
-        query = Readline.readline(
-          "Пропустить - (s), Добавить карту - (a), Открыть карты - (o): ".in_yellow).chomp
-        break if query == 'o'
-        self.walking_player = dealer if query == 's'
-        if query == 'a' && player.cards.size == 2
-          player.take_cards(1, cards_deck)
-          player.show_data
-          self.walking_player = dealer
-        end
+        break if player_walks == "break"
       when dealer
         if dealer.cards.count >= 17
           self.walking_player = player
@@ -74,5 +67,17 @@ class BlackJack
 
     dealer.take_cards(2, cards_deck)
     dealer.show_data(true)
+  end
+
+  def player_walks
+    query = Readline.readline(
+      "Пропустить - (s), Добавить карту - (a), Открыть карты - (o): ".in_yellow).chomp
+    return "break" if query == 'o'
+    self.walking_player = dealer if query == 's'
+    if query == 'a' && player.cards.size == 2
+      player.take_cards(1, cards_deck)
+      player.show_data
+      self.walking_player = dealer
+    end
   end
 end
