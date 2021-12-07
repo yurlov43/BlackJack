@@ -13,19 +13,13 @@ class BlackJack
   end
 
   def start
-    puts "#{"-" * 5} #{player.name} #{"-" * 5}"
     2.times { player.cards.add_card(cards_deck.hand_over_card) }
-    player.cards.show
     player.cards.count_up
-    puts "Количество очков: #{player.cards.count}"
-    puts "Количество денег: #{player.purse.money_amount}"
+    show_data(player)
 
-    puts "#{"-" * 5} #{dealer.name} #{"-" * 5}"
     2.times { dealer.cards.add_card(cards_deck.hand_over_card) }
-    puts "** " * dealer.cards.cards.size
     dealer.cards.count_up
-    puts "Количество очков: **"
-    puts "Количество денег: #{dealer.purse.money_amount}"
+    show_data(dealer, true)
 
     until player.cards.cards.size == 3 && dealer.cards.cards.size == 3
       case walking_player
@@ -35,38 +29,25 @@ class BlackJack
         break if query == 'o'
         self.walking_player = dealer if query == 's'
         if query == 'a' && player.cards.cards.size == 2
-          puts "#{"-" * 5} #{player.name} #{"-" * 5}"
           1.times { player.cards.add_card(cards_deck.hand_over_card) }
-          player.cards.show
           player.cards.count_up
-          puts "Количество очков: #{player.cards.count}"
-          puts "Количество денег: #{player.purse.money_amount}"
+          show_data(player)
           self.walking_player = dealer
         end
       when dealer
         if dealer.cards.count >= 17
           self.walking_player = player
         else
-          puts "#{"-" * 5} #{dealer.name} #{"-" * 5}"
           1.times { dealer.cards.add_card(cards_deck.hand_over_card) }
-          puts "** " * dealer.cards.cards.size
           dealer.cards.count_up
-          puts "Количество очков: **"
-          puts "Количество денег: #{dealer.purse.money_amount}"
+          show_data(dealer, true)
         end
 
       end
     end
 
-    puts "#{"-" * 5} #{player.name} #{"-" * 5}"
-    player.cards.show
-    puts "Количество очков: #{player.cards.count}"
-    puts "Количество денег: #{player.purse.money_amount}"
-
-    puts "#{"-" * 5} #{dealer.name} #{"-" * 5}"
-    dealer.cards.show
-    puts "Количество очков: #{dealer.cards.count}"
-    puts "Количество денег: #{dealer.purse.money_amount}"
+    show_data(player)
+    show_data(dealer)
 
     if player.cards.count <= 21 && dealer.cards.count > 21
       self.winners << player
@@ -94,5 +75,17 @@ class BlackJack
     else
       puts "Ничья."
     end
+  end
+
+  def show_data(player, hide=false)
+    puts "#{"-" * 5} #{player.name} #{"-" * 5}"
+    if hide
+      puts "** " * player.cards.cards.size
+      puts "Количество очков: **"
+    else
+      player.cards.show
+      puts "Количество очков: #{player.cards.count}"
+    end
+    puts "Количество денег: #{player.purse.money_amount}"
   end
 end
