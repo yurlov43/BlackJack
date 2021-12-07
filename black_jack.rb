@@ -2,7 +2,7 @@ require_relative 'string'
 require 'readline'
 
 class BlackJack
-  attr_accessor :player, :dealer, :bank, :cards_deck, :walking_player, :winners
+  # attr_accessor :player, :dealer, :bank, :cards_deck, :walking_player, :winners
 
   def initialize(bank, cards_deck, player, dealer)
     @bank = bank
@@ -23,6 +23,8 @@ class BlackJack
   end
 
   protected
+
+  attr_accessor :player, :dealer, :bank, :cards_deck, :walking_player, :winners
 
   def initial_distribution
     player.take_cards(2, cards_deck)
