@@ -1,7 +1,8 @@
 require_relative 'money_error'
 
 class Bank
-  attr_accessor :money_amount, :owner
+  attr_accessor :money_amount
+  attr_writer :owner
 
   def initialize(value=0)
     @money_amount = value

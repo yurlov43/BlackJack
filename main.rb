@@ -22,6 +22,9 @@ dealer_name = "Dealer"
 dealer = Player.new(dealer_name, dealer_purse, dealer_cards)
 dealer_purse.owner = dealer
 
+cards_deck = CardsDeck.new
+cards_deck.fill
+
 loop do
   begin
     bank.add_money(player.purse.spend_money(10))
@@ -31,14 +34,12 @@ loop do
     break
   end
 
-  cards_deck = CardsDeck.new
-  cards_deck.fill
   cards_deck.mix
 
   BlackJack.new(bank, cards_deck, player, dealer).start
 
   query = Readline.readline("Выйти из игры - q, Продолжить - y: ".in_yellow).chomp
   break if query == 'q'
-  player.cards.cards.size.times { player.cards.hand_over_card }
-  dealer.cards.cards.size.times { dealer.cards.hand_over_card }
+  player.cards.size.times { cards_deck.add_card(player.cards.hand_over_card) }
+  dealer.cards.size.times { cards_deck.add_card(dealer.cards.hand_over_card) }
 end

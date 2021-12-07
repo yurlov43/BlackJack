@@ -2,7 +2,7 @@ require_relative 'card'
 require_relative 'string'
 
 class CardsDeck
-  attr_accessor :cards, :count
+  attr_reader :count
 
   SUITS = {
     :spade => "\u{2660} ".in_black,
@@ -59,6 +59,9 @@ class CardsDeck
   end
 
   protected
+
+  attr_reader :cards
+  attr_writer :count
 
   def setting_aces
     self.count = 0

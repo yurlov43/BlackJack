@@ -1,7 +1,7 @@
 require 'readline'
 
 class Player
-  attr_accessor :name, :purse, :cards
+  attr_reader :cards, :purse, :name
 
   def initialize(name, purse, cards)
     @name = name
