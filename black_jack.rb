@@ -80,4 +80,13 @@ class BlackJack
       self.walking_player = dealer
     end
   end
+
+  def dealer_walks
+    if dealer.cards.count >= 17
+      self.walking_player = player
+    else
+      dealer.take_cards(1, cards_deck)
+      dealer.show_data(true)
+    end
+  end
 end
