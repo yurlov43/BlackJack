@@ -23,16 +23,10 @@ class BlackJack
         dealer_walks
       end
     end
-
     open_cards
     determine_winner
     accrue_winnings
-
-    if winners.size == 1
-      puts "Победил в игре: #{winners.first.name}"
-    else
-      puts "Ничья."
-    end
+    show_winner
   end
 
   protected
@@ -94,6 +88,14 @@ class BlackJack
     winners.each do |winner|
       gain = bank.money_amount / winners.size
       winner.purse.add_money(bank.spend_money(gain))
+    end
+  end
+
+  def show_winner
+    if winners.size == 1
+      puts "Победил в игре: #{winners.first.name}".in_magenta
+    else
+      puts "Ничья!!!".in_magenta
     end
   end
 end
