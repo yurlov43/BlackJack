@@ -7,6 +7,23 @@ class Player
     @cards = cards
   end
 
+  def take_cards(number, cards_deck)
+    number.times { cards.add_card(cards_deck.hand_over_card) }
+    cards.count_up
+  end
+
+  def show_data(hide=false)
+    puts "#{"-" * 5} #{name} #{"-" * 5}"
+    if hide
+      puts "** " * cards.cards.size
+      puts "Количество очков: **"
+    else
+      cards.show
+      puts "Количество очков: #{cards.count}"
+    end
+    puts "Количество денег: #{purse.money_amount}"
+  end
+
   def move
 
     # После этого ход переходит пользователю. У пользователя есть на выбор 3 варианта:

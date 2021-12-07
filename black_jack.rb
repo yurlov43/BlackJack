@@ -13,13 +13,11 @@ class BlackJack
   end
 
   def start
-    2.times { player.cards.add_card(cards_deck.hand_over_card) }
-    player.cards.count_up
-    show_data(player)
+    player.take_cards(2, cards_deck)
+    player.show_data
 
-    2.times { dealer.cards.add_card(cards_deck.hand_over_card) }
-    dealer.cards.count_up
-    show_data(dealer, true)
+    dealer.take_cards(2, cards_deck)
+    dealer.show_data(true)
 
     until player.cards.cards.size == 3 && dealer.cards.cards.size == 3
       case walking_player
@@ -29,25 +27,23 @@ class BlackJack
         break if query == 'o'
         self.walking_player = dealer if query == 's'
         if query == 'a' && player.cards.cards.size == 2
-          1.times { player.cards.add_card(cards_deck.hand_over_card) }
-          player.cards.count_up
-          show_data(player)
+          player.take_cards(1, cards_deck)
+          player.show_data
           self.walking_player = dealer
         end
       when dealer
         if dealer.cards.count >= 17
           self.walking_player = player
         else
-          1.times { dealer.cards.add_card(cards_deck.hand_over_card) }
-          dealer.cards.count_up
-          show_data(dealer, true)
+          dealer.take_cards(1, cards_deck)
+          dealer.show_data(true)
         end
 
       end
     end
 
-    show_data(player)
-    show_data(dealer)
+    player.show_data
+    dealer.show_data
 
     if player.cards.count <= 21 && dealer.cards.count > 21
       self.winners << player
@@ -75,17 +71,5 @@ class BlackJack
     else
       puts "Ничья."
     end
-  end
-
-  def show_data(player, hide=false)
-    puts "#{"-" * 5} #{player.name} #{"-" * 5}"
-    if hide
-      puts "** " * player.cards.cards.size
-      puts "Количество очков: **"
-    else
-      player.cards.show
-      puts "Количество очков: #{player.cards.count}"
-    end
-    puts "Количество денег: #{player.purse.money_amount}"
   end
 end
