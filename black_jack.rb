@@ -15,17 +15,10 @@ class BlackJack
 
   def start
     initial_distribution
-
-    until player.cards.size == 3 && dealer.cards.size == 3
-      if walking_player == player
-        break if player_walks == "break"
-      else
-        dealer_walks
-      end
-    end
-    open_cards
+    players_walk
     determine_winner
     accrue_winnings
+    open_cards
     show_winner
   end
 
@@ -54,12 +47,12 @@ class BlackJack
   def dealer_walks
     if dealer.cards.count >= 17
       puts "#{dealer.name} пропустил ход.".in_red
-      self.walking_player = player
     else
       puts "#{dealer.name} взял одну карту.".in_red
       dealer.take_cards(1, cards_deck)
       dealer.show_data(true)
     end
+    self.walking_player = player
   end
 
   def open_cards
@@ -96,6 +89,16 @@ class BlackJack
       puts "Победил в игре: #{winners.first.name}".in_magenta
     else
       puts "Ничья!!!".in_magenta
+    end
+  end
+
+  def players_walk
+    until player.cards.size == 3 && dealer.cards.size == 3
+      if walking_player == player
+        break if player_walks == "break"
+      else
+        dealer_walks
+      end
     end
   end
 end

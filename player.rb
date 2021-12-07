@@ -15,7 +15,7 @@ class Player
   end
 
   def show_data(hide=false)
-    puts "#{"-" * 6} #{name} #{"-" * 6}"
+    puts "#{"-" * 7} #{name} #{"-" * 7}"
     if hide
       puts "** " * cards.size
       puts "Количество очков: **"
