@@ -52,6 +52,15 @@ class CardsDeck
   end
 
   def count_up
+    setting_aces
+
+    self.count = 0
+    cards.each { |card| self.count += card.value }
+  end
+
+  protected
+
+  def setting_aces
     self.count = 0
     aces = []
 
@@ -72,8 +81,5 @@ class CardsDeck
     when 3
       aces.each { |ace| ace.value = 1 }
     end
-
-    self.count = 0
-    cards.each { |card| self.count += card.value }
   end
 end
