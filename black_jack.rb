@@ -26,11 +26,7 @@ class BlackJack
 
     open_cards
     determine_winner
-
-    winners.each do |winner|
-      gain = bank.money_amount / winners.size
-      winner.purse.add_money(bank.spend_money(gain))
-    end
+    accrue_winnings
 
     if winners.size == 1
       puts "Победил в игре: #{winners.first.name}"
@@ -91,6 +87,13 @@ class BlackJack
       winners << dealer
     else
       winners << player << dealer
+    end
+  end
+
+  def accrue_winnings
+    winners.each do |winner|
+      gain = bank.money_amount / winners.size
+      winner.purse.add_money(bank.spend_money(gain))
     end
   end
 end
