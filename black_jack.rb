@@ -19,14 +19,14 @@ class BlackJack
     dealer.take_cards(2, cards_deck)
     dealer.show_data(true)
 
-    until player.cards.cards.size == 3 && dealer.cards.cards.size == 3
+    until player.cards.size == 3 && dealer.cards.size == 3
       case walking_player
       when player
         query = Readline.readline(
           "Пропустить - (s), Добавить карту - (a), Открыть карты - (o): ".in_yellow).chomp
         break if query == 'o'
         self.walking_player = dealer if query == 's'
-        if query == 'a' && player.cards.cards.size == 2
+        if query == 'a' && player.cards.size == 2
           player.take_cards(1, cards_deck)
           player.show_data
           self.walking_player = dealer

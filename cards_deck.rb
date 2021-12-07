@@ -21,6 +21,11 @@ class CardsDeck
   def initialize
     @cards = []
     @count = 0
+    @size = 0
+  end
+
+  def size
+    @size = cards.size
   end
 
   def fill
