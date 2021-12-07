@@ -25,22 +25,7 @@ class BlackJack
     end
 
     open_cards
-
-    if player.cards.count <= 21 && dealer.cards.count > 21
-      self.winners << player
-    elsif player.cards.count > 21 && dealer.cards.count <= 21
-      self.winners << dealer
-    elsif player.cards.count > 21 && dealer.cards.count > 21
-      self.winners << player
-      self.winners << dealer
-    elsif player.cards.count > dealer.cards.count
-      self.winners << player
-    elsif player.cards.count < dealer.cards.count
-      self.winners << dealer
-    else
-      self.winners << player
-      self.winners << dealer
-    end
+    determine_winner
 
     winners.each do |winner|
       gain = bank.money_amount / winners.size
@@ -53,6 +38,8 @@ class BlackJack
       puts "Ничья."
     end
   end
+
+  protected
 
   def initial_distribution
     player.take_cards(2, cards_deck)
@@ -89,5 +76,21 @@ class BlackJack
     puts "Пора открыть карты.".in_red
     player.show_data
     dealer.show_data
+  end
+
+  def determine_winner
+    if player.cards.count <= 21 && dealer.cards.count > 21
+      winners << player
+    elsif player.cards.count > 21 && dealer.cards.count <= 21
+      winners << dealer
+    elsif player.cards.count > 21 && dealer.cards.count > 21
+      winners << player << dealer
+    elsif player.cards.count > dealer.cards.count
+      winners << player
+    elsif player.cards.count < dealer.cards.count
+      winners << dealer
+    else
+      winners << player << dealer
+    end
   end
 end
